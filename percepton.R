@@ -48,6 +48,14 @@ traineePerceptron <- function (xCords, yCords, teacherValues, activationFunction
   return (perceptron)
 }
 
+addPoint <- function (x, y, perceptron) {
+  color <- "red"
+  if (classificate(c(x, y), perceptron) == 1) {
+    color <- "blue"
+  }
+  points(x, y, col = color)
+}
+
 activationFunction <- function (a) {
   if (a < 0) {
     return (0)
@@ -58,8 +66,12 @@ activationFunction <- function (a) {
 xTraineeCordsVector <- c(-8, 2, 4, -9, -6, 5, -2, 1, -6, 4)
 yTraineeCordsVector <- c(20, 20, 25, -10, -5, 9, -10, -10, -25, -16)
 teacherVector <- c(1, 1, 1, 1, 1, 0, 0, 0, 0, 0)
-
 perceptron <- traineePerceptron(xTraineeCordsVector, yTraineeCordsVector, teacherVector, activationFunction)
 
-test1 <- c(8, -20)
-print(classificate(test1, perceptron))
+plot(-30:30, -30:30, type = "n")
+points(xTraineeCordsVector[1:5], yTraineeCordsVector[1:5], col = "blue")
+points(xTraineeCordsVector[6:10], yTraineeCordsVector[6:10], col = "red")
+abline(h = 0, v = 0, col = "gray60")
+
+addPoint(2, -20, perceptron)
+
