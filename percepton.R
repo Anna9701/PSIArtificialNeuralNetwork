@@ -1,4 +1,4 @@
-#Script for signle perceptron with two inputs to clasificate two line-separeted sets
+#Script for single perceptron with two dendrites
 
 setClass("perceptron", slots = list(weights="matrix", shift="numeric", activationFunction="function"))
 
@@ -68,7 +68,7 @@ yTraineeCordsVector <- c(20, 20, 25, -10, -5, 9, -10, -10, -25, -16)
 teacherVector <- c(1, 1, 1, 1, 1, 0, 0, 0, 0, 0)
 perceptron <- traineePerceptron(xTraineeCordsVector, yTraineeCordsVector, teacherVector, activationFunction)
 
-plot(-30:30, -30:30, type = "n")
+plot(-30:30, -30:30, xlab = "x", ylab = "y", type = "n")
 points(xTraineeCordsVector[1:5], yTraineeCordsVector[1:5], col = "blue")
 points(xTraineeCordsVector[6:10], yTraineeCordsVector[6:10], col = "red")
 abline(h = 0, v = 0, col = "gray60")
