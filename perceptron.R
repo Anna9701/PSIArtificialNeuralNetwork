@@ -23,24 +23,34 @@ traineePerceptron <- function (xCords, yCords, teacherValues, activationFunction
   #Randomly find entry value for shift value in <0,1> range.
   shift <- runif(1)
   
-  #For each epoch 
-  for (epoch in 1:n) {
-    repeat {
-      #Get x and y cords of <epoch> point and transpose to 2 rows and 1 column matrix
-      dendrites <- t(t(dendritesMatrix[,epoch]))
-      #Find value of vectored multiplication of weights and dendrites incremented by shift
-      a <- weights %*% dendrites + shift
-      #Find activation function value for result of operation above
-      y <- activationFunction(a)
-      #Check, if the result value of activation function is equal pattern value
-      error <- teacherValues[epoch] - y
-      if (error == 0) { #If error equals 0 go forward to the next epoch
-        break
-      } else { #If error different from 0, then teach perceptron by modyfication of weights and shift value
-        shift <- shift + error
-        weights <- weights + error %*% t(dendrites)
-      }
-    } 
+  
+  repeat {
+    wasError <- 0;
+    
+    #For each epoch 
+    
+    for (epoch in 1:n) {
+      repeat {
+        #Get x and y cords of <epoch> point and transpose to 2 rows and 1 column matrix
+        dendrites <- t(t(dendritesMatrix[,epoch]))
+        #Find value of vectored multiplication of weights and dendrites incremented by shift
+        a <- weights %*% dendrites + shift
+        #Find activation function value for result of operation above
+        y <- activationFunction(a)
+        #Check, if the result value of activation function is equal pattern value
+        error <- teacherValues[epoch] - y
+        if (error == 0) { #If error equals 0 go forward to the next epoch
+          break
+        } else { #If error different from 0, then teach perceptron by modyfication of weights and shift value
+          shift <- shift + error
+          weights <- weights + error %*% t(dendrites)
+          wasError <- 1
+        }
+      } 
+    }
+    if (wasError == 0) {
+      break;
+    }
   }
   
   perceptron <- new("perceptron", weights = weights, shift = shift, 
@@ -83,3 +93,8 @@ addPoint(-20, 20, perceptron)
 addPoint(25, 25, perceptron)
 addPoint(-20, -10, perceptron)
 addPoint(-20, 0, perceptron)
+
+abline(a = -b/perceptron@weights[1], b = -perceptron@shift)
+
+
+#po forze uczącym sprawdzić jeszcze raz, czy ciągle dla każdego punktu błąd równy 0 
