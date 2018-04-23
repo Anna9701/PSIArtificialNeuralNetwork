@@ -26,9 +26,7 @@ traineePerceptron <- function (xCords, yCords, teacherValues, activationFunction
   
   repeat {
     wasError <- 0;
-    
     #For each epoch 
-    
     for (epoch in 1:n) {
       repeat {
         #Get x and y cords of <epoch> point and transpose to 2 rows and 1 column matrix
